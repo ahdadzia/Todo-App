@@ -20,6 +20,9 @@ struct AddTodoView: View {
     @State private var errorTitle: String = ""
     @State private var errorMessage: String = ""
     
+    let themes: [Theme] = themeData
+    @ObservedObject var theme = ThemeSettings.shared
+    
     
     var body: some View {
         NavigationView{
@@ -60,10 +63,10 @@ struct AddTodoView: View {
                         
                     }){
                         Text("Save")
-                            .font(.system(size: 20, weight: .bold, design: .default))
-                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .font(.system(size: 24, weight: .bold, design: .default))
                             .padding()
-                            .background(Color.blue)
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .background(themes[self.theme.themeSettings].themeColor)
                             .cornerRadius(9)
                             .foregroundColor(.white)
                     }
@@ -83,6 +86,8 @@ struct AddTodoView: View {
                 Alert(title: Text(errorTitle), message: Text(errorMessage), dismissButton: .default(Text("OK")))
             }
         }
+        .accentColor(themes[self.theme.themeSettings].themeColor)
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
